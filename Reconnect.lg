@@ -1,0 +1,41 @@
+
+# UnpaidRecoAgreement
+[Activity
+    Text = Your service will be turned back on once you pay ${omex.asAmount(conversation.PredictedPayAssistOption.MinimumDownPaymentDue)}.
+    Speak = Your service will be turned back on once you pay <say-as interpret-as="unit">${omex.asAmount(conversation.PredictedPayAssistOption.MinimumDownPaymentDue)}</say-as>.
+    ActivityId = Reconnect-Turnonpower
+]
+
+# SecurityDepositIncluded
+[Activity
+    Text = This includes ${omex.asAmount(conversation.accountinformation.ReconnectHalfSecurityDeposit)}, which is half of your security deposit.
+    Speak = This includes <say-as interpret-as="unit">${omex.asAmount(conversation.accountinformation.ReconnectHalfSecurityDeposit)}</say-as>, which is half of your security deposit.
+    ActivityId = Reconnect-securitydeposit
+]
+
+# CutInAfterToday
+[Activity
+    Text = However, your services will be turned back on within the next 24 hours.
+    Speak = However, your services will be turned back on within the next 24 hours.
+    ActivityId = Reconnect-24hours
+]
+
+# CutInSafetyPrecaution
+[Activity
+    Text = Lastly, we recommend you turn off your main breaker, as well as disconnect any generators before we reconnect service.
+    Speak = Lastly, we recommend you turn off your main breaker, as well as disconnect any generators before we reconnect service.
+    ActivityId = Reconnect-MainBreaker
+]
+
+# Reconnect.CutInSafetyPrecautionGas
+[Activity
+    Text = An adult (18 years or older) must be present when the technician arrives to ensure we can access your pilot lights and we'll need their phone number.
+    Speak = An adult, 18 years or older must be present when the technician arrives to ensure we can access your pilot lights and we'll need their phone number.
+    ActivityId = Reconnect-CutInSafetyPrecaution-Gas
+]
+# Reconnect.AdultAtHomePhoneNumber
+[Activity
+    Text = Please say or enter the phone number of the adult who will be at the reconnect services address.
+    Speak = Please say or enter the phone number of the adult who will be at the reconnect services address.
+    ActivityId = Reconnect-AdultAtHomePhoneNumber
+]
