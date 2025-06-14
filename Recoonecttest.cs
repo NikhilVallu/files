@@ -135,13 +135,12 @@ namespace PPL.Omex.Bot.Tests.Dialogs.Payment
             mockReco2.AsSimpleChildDialog(nameof(Reco2), MockOmexRecognizer.Object)
                 .DoneSimpleChildDialogSetup();
             
-                // Setup StopPhoneEntry dialog with expected interactions for this test case
-                mockStopPhoneEntryDialog = new StopPhoneEntry();
-                mockStopPhoneEntryDialog.AsSimpleChildDialog(nameof(StopPhoneEntry), MockOmexRecognizer.Object)
-                    // The StopPhoneEntry dialog will prompt for the number, then confirm it
-                    .WhenPromptMatches(ExpectedPhoneNumberEntryPrompt, "5551234567") // Simulates user saying a number
-                    .WhenPromptMatches($"{ExpectedPhoneNumberHeardPromptPrefix}5551234567\n{ExpectedPhoneNumberConfirmationPrompt}", "yes") // Simulates user confirming
-                    .DoneSimpleChildDialogSetup();
+            // Setup StopPhoneEntry dialog. The prompts and user responses are driven by the 'Turns'
+            // in the FlowDataGenerator, so we don't need to specify them here in the mock setup.
+            // The mock just needs to be set up to allow the dialog to complete.
+            mockStopPhoneEntryDialog = new StopPhoneEntry();
+            mockStopPhoneEntryDialog.AsSimpleChildDialog(nameof(StopPhoneEntry), MockOmexRecognizer.Object)
+                .DoneSimpleChildDialogSetup();
         }
 
         private async Task SetupTurn(FlowData flowData, IOmexStateWrapper omexStateWrapper, ITurnContext turnContext)
