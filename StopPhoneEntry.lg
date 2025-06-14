@@ -1,0 +1,68 @@
+# AskPhoneNumberAttributes
+[Activity
+    SpeechHints = $OOV_CLASS_DIGIT_SEQUENCE    
+    IncludeDigits = true
+    NumberOfDigits = 10
+]
+
+# AskPhoneNumber
+- IF: ${this.turnCount == 1}
+    - ${AskPhoneNumberPrompt()}
+- ELSEIF: ${this.turnCount == 2 && conversation.phonenumberstatus.isvalid == true}
+    - ${OneMoreTryPrompt()}
+- ELSE:
+    - ${AskPhoneNumberFirstInvalid()}
+
+# AskPhoneNumberPrompt
+[Activity
+    Text = Please say or enter the phone number you'd like to use for this account.
+    Speak = Please say or enter the phone number you'd like to use for this account.
+    ActivityId = PhoneNumberEntry   
+    ${AskPhoneNumberAttributes()}
+]
+
+# AskPhoneNumberForReconnect 
+- IF: ${this.turnCount == 1}
+    - ${AskPhoneNumberPromptForReconnect()}
+- ELSEIF: ${this.turnCount == 2 && conversation.phonenumberstatus.isvalid == true}
+    - ${OneMoreTryPrompt()}
+- ELSE:
+    - ${AskPhoneNumberFirstInvalid()}
+    
+# AskPhoneNumberPromptForReconnect
+[Activity
+    Text = Please say or enter the phone number of the adult who will be at the reconnect services address.
+    Speak = Please say or enter the phone number of the adult who will be at the reconnect services address.
+    ActivityId = PhoneNumberForReconnect  
+    ${AskPhoneNumberAttributes()}
+]
+
+# AskPhoneNumberFirstInvalid
+[Activity
+    Text = Apologies, but we're having trouble recognizing that phone number.  Please try again, starting with the 3-digit area code, followed by the remaining 7 digits.
+    Speak = Apologies, but we're having trouble recognizing that phone number.  Please try again, starting with the 3-digit area code, followed by the remaining 7 digits.
+    ActivityId = PhoneNumberEntry-FirstInvalid    
+    ${AskPhoneNumberAttributes()}
+]
+
+# OneMoreTryPrompt
+[Activity
+    Text = Sorry, let's try one more time. 
+    Speak = Sorry, let's try one more time. 
+    ActivityId = PhoneNumberEntry-ValidButIncorrect    
+    ${AskPhoneNumberAttributes()}
+]
+
+# UnableToUpdatePhoneNumber
+[Activity
+    Text = Sorry for the inconvenience, but we're not able to update your phone number.
+    Speak = Sorry for the inconvenience, but we're not able to update your phone number.
+    ActivityId = PhoneNumberEntry-Unsuccessful
+]
+
+# ConfirmPhoneNumber
+[Activity
+    Text = We heard ${conversation.phoneentry}. Is that correct?
+    Speak = We heard <say-as interpret-as="telephone" format="1">${conversation.phoneentry}</say-as>. Is that correct?
+    ActivityId = PhoneNumberEntry-Confirmed
+]
